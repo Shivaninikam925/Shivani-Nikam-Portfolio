@@ -1,0 +1,129 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  background: #0f0f14;
+  color: #eaeaf0;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(15, 15, 20, 0.95);
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 40px;
+  z-index: 1000;
+}
+
+nav ul {
+  display: flex;
+  gap: 25px;
+  list-style: none;
+}
+
+nav li {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+nav li:hover {
+  opacity: 1;
+}
+
+.logo {
+  font-weight: 600;
+}
+
+main {
+  padding-top: 80px;
+}
+
+.section {
+  display: none;
+  min-height: calc(100vh - 80px);
+  padding: 80px;
+  animation: fadeIn 0.5s ease;
+}
+
+.section.active {
+  display: block;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  opacity: 0.8;
+  margin-bottom: 30px;
+}
+
+h2 {
+  font-size: 2.2rem;
+  margin-bottom: 30px;
+}
+
+.project {
+  background: rgba(255,255,255,0.04);
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.project span {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+a {
+  color: #7aa2ff;
+  text-decoration: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+button {
+  background: #7aa2ff;
+  color: #0f0f14;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+}
+button:hover {
+  background: #5c82d1;
+}
+footer {
+  text-align: center;
+  padding: 20px;
+  background: rgba(15, 15, 20, 0.95);
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+footer a {
+  color: #7aa2ff;
+}
+footer a:hover {
+  text-decoration: underline;
+}
+
