@@ -2,147 +2,161 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Shivani Nikam | Research & ML</title>
-  <link rel="stylesheet" href="styles.css" />
-  <script defer src="script.js"></script>
+  <title>Shivani Nikam | Academic Research Portfolio</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<nav>
-  <div class="logo">Shivani Nikam</div>
-  <ul>
-    <li onclick="showSection('home')">Home</li>
-    <li onclick="showSection('projects')">Projects</li>
-    <li onclick="showSection('publications')">Publications</li>
-    <li onclick="showSection('about')">About</li>
-    <li onclick="showSection('contact')">Contact</li>
-  </ul>
-</nav>
+<a class="skip-link" href="#main">Skip to content</a>
 
-<main>
+<!-- Background Shapes -->
+<div class="bg-shape shape1"></div>
+<div class="bg-shape shape2"></div>
 
-<section id="home" class="section active">
-  <h1>Research-Oriented Machine Learning</h1>
-  <p class="subtitle">
-    Representation Learning • Invariance • Perception
-  </p>
-  <p>
-    BTech CSE @ VIT Bhopal <br/>
-    Springer Oral Presenter • Aspiring Researcher
-  </p>
-</section>
+<!-- Cursor Glow -->
+<div id="cursor-glow"></div>
 
-<section id="projects" class="section">
-  <h2>Projects</h2>
+<div class="container">
 
-  <div class="project">
-    <h3>When Permutation Invariance Fails</h3>
-    <p>
-      A minimal counterexample showing how permutation-invariant encoders
-      collapse task-relevant information in marked-point set problems.
-    </p>
-    <span>Representation Learning • Theory</span>
-  </div>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <!-- Replace the src below with your image URL (e.g. https://example.com/your-photo.jpg) -->
+    <img src="images/avatar.jpg" class="avatar" alt="Shivani Nikam — profile photo" loading="lazy">
 
-  <div class="project">
-    <h3>Perceptual Invariance Improves Generalization</h3>
-    <p>
-      Demonstrates how invariant representations stabilize learning
-      under illumination and color transformations.
-    </p>
-    <span>Perception • Experimental ML</span>
-  </div>
+    <h1>Shivani Nikam</h1>
+    <p class="subtitle">BTech Computer Science · Research Portfolio</p>
 
-  <div class="project">
-    <h3>Illumination Invariance via Edge-Based Representations</h3>
-    <p>
-      Shows edge-based image representations remain stable under lighting
-      changes while raw pixel representations fail.
-    </p>
-    <span>Vision • Representation Stability</span>
-  </div>
+    <nav role="tablist">
+      <div id="tab-status" class="sr-only" aria-live="polite"></div>
+      <button id="tab-about" class="tab active" data-tab="about" role="tab" aria-selected="true" aria-controls="about" tabindex="0">About</button>
+      <button id="tab-research" class="tab" data-tab="research" role="tab" aria-selected="false" aria-controls="research" tabindex="-1">Research</button>
+      <button id="tab-projects" class="tab" data-tab="projects" role="tab" aria-selected="false" aria-controls="projects" tabindex="-1">Projects</button>
+      <button id="tab-publications" class="tab" data-tab="publications" role="tab" aria-selected="false" aria-controls="publications" tabindex="-1">Publications</button>
+      <button id="tab-contact" class="tab" data-tab="contact" role="tab" aria-selected="false" aria-controls="contact" tabindex="-1">Contact</button>
 
-  <div class="project">
-    <h3>Drug–Drug Interaction Prediction using GNNs</h3>
-    <p>
-      Graph Neural Network pipeline for predicting DDIs from molecular
-      structure with safe negative sampling and robust evaluation.
-    </p>
-    <span>Graph ML • Healthcare</span>
-  </div>
+      <div class="tab-indicator" aria-hidden="true"></div>
+    </nav>
+  </aside>
 
-  <div class="project">
-    <h3>Symmetry-Aware Representation Learning</h3>
-    <p>
-      Studies permutation symmetry via group averaging to enforce
-      exact invariance in learned embeddings.
-    </p>
-    <span>Symmetry • Inductive Bias</span>
-  </div>
+  <!-- MAIN CONTENT -->
+  <main id="main" class="content" role="main">
 
-  <div class="project">
-    <h3>Human Perception Simulator</h3>
-    <p>
-      Simulates human color perception under brightness, hue,
-      and illumination changes using perceptual distance metrics.
-    </p>
-    <span>Perception • Color Science</span>
-  </div>
+    <!-- ABOUT -->
+    <section id="about" class="tab-content active" role="tabpanel" aria-labelledby="tab-about" aria-hidden="false">
+      <h2>About</h2>
+      <p>
+        I am a second-year BTech Computer Science student at VIT Bhopal University, India,
+        with research interests in machine learning, representation learning, and human perception.
+      </p>
+      <ul class="info-list">
+        <li><strong>University:</strong> VIT Bhopal University</li>
+        <li><strong>Degree:</strong> BTech CSE</li>
+        <li><strong>Expected Graduation:</strong> 2028</li>
+        <li><strong>Country:</strong> India</li>
+      </ul>
+    </section>
 
-  <div class="project">
-    <h3>Contrastive Representation Learning for Drug Pairs</h3>
-    <p>
-      Self-supervised contrastive learning approach to obtain
-      interaction-aware drug representations.
-    </p>
-    <span>Self-Supervised Learning</span>
-  </div>
+    <!-- RESEARCH -->
+    <section id="research" class="tab-content" role="tabpanel" aria-labelledby="tab-research" aria-hidden="true">
+      <h2>Research Experience</h2>
 
-</section>
+      <div class="card">
+        <h3>HueMatch</h3>
+        <p class="muted">Conference Paper · Springer · Accepted</p>
+        <p>
+          AI-powered web-based system for personalized seasonal colour analysis
+          and fashion recommendations.
+        </p>
+        <p><strong>Role:</strong> 2nd author · Main implementer · Idea contributor</p>
+      </div>
 
-<section id="publications" class="section">
-  <h2>Publications</h2>
+      <div class="card">
+        <h3>Conceptual Research Directions</h3>
+        <ul>
+          <li>When Permutation Invariance Fails</li>
+          <li>Perceptual Invariance Improves Generalization</li>
+          <li>Illumination Invariance via Edge-Based Representations</li>
+        </ul>
+      </div>
+    </section>
 
-  <div class="project">
-    <h3>HueMatch: Personalized Seasonal Color Analysis</h3>
-    <p>
-      Accepted Springer conference paper with oral presentation.
-      Focuses on perceptual color modeling and user-centered AI.
-    </p>
-    <span>Springer • Oral Presentation</span>
-  </div>
+    <!-- PROJECTS -->
+    <section id="projects" class="tab-content" role="tabpanel" aria-labelledby="tab-projects" aria-hidden="true">
+      <h2>Projects</h2>
 
-</section>
+      <div class="projects-scroll">
 
-<section id="about" class="section">
-  <h2>About Me</h2>
-  <p>
-    I am a second-year Computer Science undergraduate interested in machine learning, computational modelling, and human-centered AI. 
-    I enjoy building systems that interpret real-world signals—visual, behavioural, or structural—and applying ML methods to scientific and practical problems.
-  </p>
-  <p>
-    My interests lie in invariance, symmetry-aware learning,
-    perceptual modeling, and understanding failure modes of neural networks.
-  </p>
-  <p>
-    Currently seeking mentorship to refine research direction
-    and long-term academic goals.
-  </p>
-</section>
+        <a class="project" href="https://github.com/Shivaninikam925/human-perception-simulator" target="_blank" rel="noopener noreferrer">
+          <h3>Human Perception Simulator</h3>
+          <p>Simulation of human colour perception using CIEDE2000 (ΔE).</p>
+          <span class="project-link">GitHub ↗</span>
+        </a>
 
-<section id="contact" class="section">
-  <h2>Contact</h2>
-  <p>Email: shivaninikam925@gmail.com</p>
-  <p>
-    GitHub:
-    <a href="https://github.com/Shivaninikam925" target="_blank">
-      github.com/Shivaninikam925
-    </a>
-  </p>
-</section>
+        <a class="project" href="https://github.com/Shivaninikam925/drug-interaction-gnn" target="_blank" rel="noopener noreferrer">
+          <h3>Drug–Drug Interaction Prediction (GNN)</h3>
+          <p>Graph Neural Network pipeline for predicting DDIs.</p>
+          <span class="project-link">GitHub ↗</span>
+        </a>
 
-</main>
+        <a class="project" href="https://github.com/Shivaninikam925/symmetry-aware-representation" target="_blank" rel="noopener noreferrer">
+          <h3>Symmetry-Aware Representation Learning</h3>
+          <p>Permutation invariance via group averaging.</p>
+          <span class="project-link">GitHub ↗</span>
+        </a>
 
+        <a class="project" href="https://github.com/Shivaninikam925/perceptual-colour-invariance" target="_blank" rel="noopener noreferrer">
+          <h3>Perceptual Invariance in Human Colour Judgement</h3>
+          <span class="project-link">GitHub ↗</span>
+        </a>
+
+        <a class="project" href="https://github.com/Shivaninikam925/contrastive-drug_pair-representations" target="_blank" rel="noopener noreferrer">
+          <h3>Contrastive Representation Learning for Drug Pairs</h3>
+          <span class="project-link">GitHub ↗</span>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- PUBLICATIONS -->
+    <section id="publications" class="tab-content" role="tabpanel" aria-labelledby="tab-publications" aria-hidden="true">
+      <h2>Publications</h2>
+      <div class="card">
+        <strong>HueMatch</strong><br>
+        Springer · Oral Presentation
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="tab-content" role="tabpanel" aria-labelledby="tab-contact" aria-hidden="true">
+      <h2>Contact</h2>
+      <p class="email">shivaninikam925@gmail.com <button class="copy-email" data-email="shivaninikam925@gmail.com" aria-label="Copy email to clipboard">📋</button></p>
+
+      <div class="contact-links" aria-label="Social links">
+        <a class="social-link linkedin" href="https://www.linkedin.com/in/shivani-nikam-74196721a/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn (opens in new tab)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M4.98 3.5C4.98 4.88 3.86 6 2.48 6C1.1 6 0 4.88 0 3.5C0 2.12 1.12 1 2.5 1C3.88 1 4.98 2.12 4.98 3.5ZM0.22 8H4.74V24H0.22V8Z" fill="currentColor"/>
+            <path d="M8.99 8H13.17V10.1H13.24C13.93 8.88 15.55 7.6 17.79 7.6C22.18 7.6 24 10.26 24 14.67V24H19.48V15.83C19.48 13.79 19.42 11.24 16.53 11.24C13.58 11.24 13.07 13.48 13.07 15.64V24H8.55V8H8.99Z" fill="currentColor"/>
+          </svg>
+          <span>LinkedIn</span>
+        </a>
+
+        <a class="social-link github" href="https://github.com/Shivaninikam925" target="_blank" rel="noopener noreferrer" aria-label="GitHub (opens in new tab)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 .5C5.73.5.75 5.48.75 11.75c0 4.95 3.2 9.13 7.64 10.61.56.1.77-.24.77-.54 0-.27-.01-1-.02-1.97-3.11.68-3.77-1.5-3.77-1.5-.51-1.31-1.24-1.66-1.24-1.66-1.01-.69.08-.67.08-.67 1.12.08 1.71 1.16 1.71 1.16.99 1.7 2.6 1.21 3.24.93.1-.72.39-1.21.71-1.49-2.48-.28-5.09-1.24-5.09-5.5 0-1.21.43-2.2 1.14-2.98-.11-.28-.5-1.42.11-2.96 0 0 .93-.3 3.04 1.14.88-.24 1.82-.35 2.76-.35.94 0 1.88.12 2.76.35 2.1-1.44 3.03-1.14 3.03-1.14.62 1.54.23 2.68.12 2.96.71.78 1.14 1.77 1.14 2.98 0 4.27-2.62 5.22-5.11 5.49.4.35.75 1.04.75 2.1 0 1.52-.01 2.75-.01 3.12 0 .3.21.65.78.54 4.44-1.48 7.64-5.66 7.64-10.61C23.25 5.48 18.27.5 12 .5z" fill="currentColor"/>
+          </svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+
+      <div id="copy-status" class="sr-only" aria-live="polite"></div>
+    </section>
+
+  </main>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
