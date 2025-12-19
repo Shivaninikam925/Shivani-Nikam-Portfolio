@@ -3,17 +3,72 @@
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #f6f1eb, #efe6dc);
+  background: radial-gradient(circle at 12% 18%, rgba(214,184,109,0.06), transparent 9%), linear-gradient(135deg, var(--plum) 8%, var(--charcoal) 68%);
+  min-height: 100vh;
   overflow-x: hidden; /* allow vertical scrolling on small screens */
-  color: #2b2b2b;
+  color: var(--text);
 }
 
 :root {
   --accent: #c08497;
   --accent-2: #7a918d;
+  --accent-gold: #d6b86d;
+  --plum: #5a2a45;
+  --charcoal: #0b1220;
   --focus: rgba(192,132,151,0.28);
   --transition: 240ms;
+  --transition-fast: 120ms;
+  --transition-slow: 420ms;
+  --easing: cubic-bezier(.2,.8,.2,1);
+
+  /* Accessible color palette */
+  --bg-base: #f6f1eb; /* fallback page background (unused with new gradient) */
+  --text: #1f2937; /* primary text (dark) for cards) */
+  --muted: #9aa6b2; /* secondary text */
+  --surface: rgba(255,255,255,0.95); /* card / surface */
+  --card-bg: rgba(255,255,255,0.95);
+  --dark-surface: var(--charcoal); /* deep charcoal for panels */
+  --on-dark: #ffffff; /* text on dark surfaces */
+  --tile-bg: rgba(20,18,24,0.7); /* darker translucent tiles for better contrast */
+  --link: var(--accent-gold);
+  --badge-bg: rgba(0,0,0,0.6);
+} 
+
+/* Section-specific color overrides (Research & Publications) */
+#research, .panel #research, #publications, .panel #publications {
+  /* tweak these variables to change section look */
+  --sec-accent: var(--accent-gold);
+  --sec-text: rgba(255,255,255,0.95);
+  --sec-muted: rgba(255,255,255,0.72);
 }
+
+/* Headings */
+#research h2, #publications h2,
+.panel #research h2, .panel #publications h2 {
+  color: var(--sec-accent);
+}
+
+/* Body text and lists */
+#research p, #research li, #publications p, #publications li,
+.panel #research p, .panel #publications p,
+.panel #research li, .panel #publications li {
+  color: var(--sec-text);
+}
+
+/* Muted / secondary text */
+#research .muted, #publications .muted,
+.panel #research .muted, .panel #publications .muted {
+  color: var(--sec-muted);
+}
+
+/* Cards inside these sections — subtle warm tint */
+#research .card, #publications .card,
+.panel #research .card, .panel #publications .card {
+  background: rgba(214,184,109,0.03);
+  border-color: rgba(214,184,109,0.06);
+  color: var(--sec-text);
+}
+
 
 /* Background shapes */
 .bg-shape {
@@ -38,40 +93,357 @@ body {
 /* Cursor Glow */
 #cursor-glow {
   position: fixed;
-  width: 220px;
-  height: 220px;
-  background: radial-gradient(circle, rgba(192,132,151,0.32), transparent 60%);
+  width: 260px;
+  height: 260px;
+  background: radial-gradient(circle, rgba(214,184,109,0.22), rgba(192,132,151,0.12), transparent 55%);
   pointer-events: none;
   transform: translate(-50%, -50%);
   z-index: 999;
   will-change: transform; /* hint for smoother updates */
+  transition: opacity 320ms ease;
+  opacity: 0.95;
+  animation: cursorPulse 4.5s ease-in-out infinite;
 }
+@keyframes cursorPulse { 0%{ transform: translate(-50%, -50%) scale(1); opacity:1 } 50%{ transform: translate(-50%, -50%) scale(1.06); opacity:0.85 } 100%{ transform: translate(-50%, -50%) scale(1); opacity:1 } }
 
 /* Layout */
 .container { display: flex; height: 100vh; position: relative; z-index: 1; }
 
-/* Sidebar */
+/* Sidebar (hidden for dossier layout but kept in DOM for accessibility) */
 .sidebar {
   width: 270px;
   background: linear-gradient(180deg, #3b1d3f, #2a142d);
   color: #f6f1eb;
   padding: 32px;
+  display: none; /* hidden, dossier layout replaces it */
+}
+
+/* Dossier central layout */
+.dossier {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  align-items: center;
+  justify-items: center;
+  padding-top: 20px;
+}
+
+.landing-card {
+  position: relative;
+  width: min(720px, 86%);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius: 18px;
+  padding: 34px;
+  text-align: center;
+  color: var(--on-dark);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 28px 80px rgba(28,12,27,0.55);
+  border: 1px solid rgba(255,255,255,0.06);
+  overflow: hidden;
+}
+
+/* Sheen */
+.landing-card::before {
+  content: '';
+  position: absolute;
+  left: -40%;
+  top: -20%;
+  width: 180%;
+  height: 180%;
+  background: linear-gradient(100deg, rgba(214,184,109,0.14), rgba(192,132,151,0.06), transparent 50%);
+  transform: rotate(-18deg) translateX(0);
+  transition: transform 900ms cubic-bezier(.2,.8,.2,1), opacity 600ms;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.landing-card.shine-on::before,
+.landing-card.shine-animate::before {
+  transform: rotate(-18deg) translateX(30%);
+}
+
+.dossier-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  margin: 0 0 6px 0;
+  background: linear-gradient(90deg, var(--accent-gold), var(--accent));
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+}
+
+/* gentle landing pulse */
+@keyframes landingPulse {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+  100% { transform: translateY(0); }
+}
+.landing-card.shine-animate { animation: landingPulse 6s ease-in-out infinite 1200ms; }
+
+.dossier-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  margin: 0 0 6px 0;
+}
+.dossier-role { opacity: 0.9; margin: 0 0 10px 0; font-weight: 500; }
+.dossier-intro { margin: 0 0 8px 0; color: rgba(255,255,255,0.9); }
+
+/* About landing snippet & About tile color overrides */
+.landing-card .dossier-intro { color: var(--about-snippet-color, var(--accent-gold)); }
+/* About tile description — display in white to match other tile text */
+.tile[data-target="about"] .tile-desc { color: var(--on-dark); opacity: 0.95; }
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  width: min(720px, 86%);
+}
+
+.tile {
+  background: var(--tile-bg);
+  border-radius: 12px;
+  padding: 18px 14px;
+  font-weight: 700;
+  color: var(--on-dark);
+  border: 1px solid rgba(255,255,255,0.035);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: transform var(--transition) var(--easing), box-shadow var(--transition) var(--easing), background var(--transition) var(--easing), color var(--transition) var(--easing);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(10px) scale(0.99);
+  animation: tileIn 420ms cubic-bezier(.2,.8,.2,1) forwards;
+  will-change: transform, box-shadow, color;
+} 
+
+.tile-icon { color: #fff; opacity: 0.95; transition: color var(--transition) var(--easing), transform var(--transition) var(--easing); will-change: transform, color; }
+.tile-head { font-size: 16px; transition: color var(--transition) var(--easing); }
+.tile-desc { font-size: 13px; opacity: 0.9; font-weight: 500; }
+
+
+
+/* Hover glow using a blurred pseudo element */
+.tile { position: relative; }
+.tile::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 14px;
+  background: radial-gradient(closest-side, rgba(192,132,151,0.14), transparent 40%);
+  filter: blur(14px);
+  opacity: 0;
+  transition: opacity var(--transition) var(--easing);
+  pointer-events: none;
+  z-index: -1;
+} 
+
+.tile:hover::after, .tile:focus-visible::after { opacity: 1; }
+
+/* Stagger delays via nth-child */
+.tiles .tile:nth-child(1) { animation-delay: 60ms; }
+.tiles .tile:nth-child(2) { animation-delay: 140ms; }
+.tiles .tile:nth-child(3) { animation-delay: 220ms; }
+.tiles .tile:nth-child(4) { animation-delay: 300ms; }
+.tiles .tile:nth-child(5) { animation-delay: 380ms; }
+@keyframes tileIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.99); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Card entrance animation (staggered when section becomes active) */
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.995); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Panel content reveal */
+@keyframes panelContentIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.996); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Subtle shimmer overlay for cards on hover */
+.card {
+  position: relative; /* needed for shimmer pseudo */
+}
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  transform: translateX(-60%);
+  filter: blur(10px);
+  opacity: 0;
+  transition: opacity 420ms var(--easing), transform 900ms linear;
+  pointer-events: none;
+  border-radius: inherit;
+}
+.card:hover::before { opacity: 1; transform: translateX(20%); }
+
+/* Apply animations to cards only when the section has .animate */
+.tab-content.active.animate .card {
+  animation: cardIn 420ms var(--easing) forwards;
+}
+.tab-content.active.animate .card:nth-child(1){ animation-delay: 80ms }
+.tab-content.active.animate .card:nth-child(2){ animation-delay: 160ms }
+.tab-content.active.animate .card:nth-child(3){ animation-delay: 240ms }
+.tab-content.active.animate .card:nth-child(4){ animation-delay: 320ms }
+.tab-content.active.animate .card:nth-child(5){ animation-delay: 400ms }
+
+/* Panel inner reveal when panel has 'animate' */
+.panel.open.animate .panel-inner { animation: panelContentIn 420ms var(--easing) forwards; }
+
+/* Small click ripple for tiles */
+.tile:active { transform: translateY(-4px) scale(0.995); transition: transform 120ms ease; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tab-content.active.animate .card, .panel.open.animate .panel-inner, .card::before, .tile:active { animation: none !important; transition: none !important; transform: none !important; opacity: 1 !important; }
+}
+
+/* Focus-visible for tiles (keyboard users) */
+.tile:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 6px;
+  border-radius: 10px;
+}
+
+/* Prevent background scroll while dialog open */
+body.no-scroll {
+  overflow: hidden !important;
+  touch-action: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile { animation: none !important; transform: none; opacity: 1; }
+}
+.tile:hover, .tile:focus {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 28px 60px rgba(80,24,40,0.28);
+  background: linear-gradient(135deg, rgba(214,184,109,0.08), rgba(192,132,151,0.06));
+}
+.tile:hover .tile-head { color: var(--accent-gold); }
+.tile:hover .tile-icon { transform: translateY(-4px) rotate(-6deg); color: var(--accent-gold); }
+
+/* Panel overlay and glass panel */
+.panel-overlay {
+  position: fixed;
+  inset: 0;
+  /* default hidden; shown only when [open] attribute is present */
+  display: none;
+  place-items: center;
+  background: linear-gradient(180deg, rgba(10,8,12,0.45), rgba(10,8,12,0.6));
+  z-index: 2000;
+  padding: 20px;
+}
+.panel-overlay[open] {
+  display: grid;
+}
+.panel-overlay[hidden] {
+  display: none !important;
+  pointer-events: none;
+}
+
+.panel {
+  width: min(920px, 96%);
+  max-height: 86vh;
+  overflow: auto;
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  border-radius: 16px;
+  padding: 26px;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.04);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 40px 90px rgba(16,8,28,0.6);
+  transform: translateY(18px) scale(0.99);
+  opacity: 0;
+  transition: transform var(--transition) var(--easing), opacity var(--transition) var(--easing), box-shadow var(--transition) var(--easing), background var(--transition) var(--easing);
+}
+
+.panel.open { box-shadow: 0 48px 120px rgba(16,8,28,0.7); }
+
+/* Ensure links within the panel are visible and accessible */
+.panel a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.panel h2 { color: #fff; transition: color var(--transition) var(--easing); }
+/* When panel is open, make the panel heading match the section accent (gold) */
+.panel.open h2 { color: var(--accent-gold); }
+
+.panel .card { background: rgba(255,255,255,0.03); }
+
+/* Ensure cloned section content inside the panel stays light-colored (white) */
+.panel .panel-inner, .panel .panel-inner * {
+  color: var(--on-dark);
+}
+
+/* Heading and link accents for cloned content */
+.panel .panel-inner h2, .panel .panel-inner h3 { color: var(--accent-gold); }
+.panel .panel-inner .muted { color: rgba(255,255,255,0.72); }
+.panel .panel-inner a { color: var(--accent-gold); }
+
+/* Make publication card titles (and any <strong> emphasis) stand out in gold */
+.panel .panel-inner .card strong,
+.panel .panel-inner .card h3 {
+  color: var(--accent-gold);
+}
+
+/* If you prefer the whole publication card to use the gold accent, use:
+.panel .panel-inner .card.publication { color: var(--accent-gold); }
+*/
+
+.panel-overlay[open] .panel, .panel.open {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.panel-close {
+  position: absolute;
+  right: 22px;
+  top: 18px;
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  color: #fff;
+  cursor: pointer;
+}
+
+@media (max-width: 700px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .landing-card { padding: 20px; }
+}
+
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(1, 1fr); gap: 10px; }
+  .panel { padding: 18px; }
 }
 
 /* Profile avatar */
 .avatar {
-  width: 96px;
-  height: 96px;
+  /* larger circular avatar for better visibility in landing card */
+  width: 128px;
+  height: 128px;
   border-radius: 50%;
   object-fit: cover;
   border: 4px solid rgba(255,255,255,0.12);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.16);
   display: block;
-  margin-bottom: 14px;
+  margin-bottom: 18px;
+  transition: transform var(--transition) var(--easing), box-shadow var(--transition) var(--easing), border-color var(--transition) var(--easing);
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .avatar:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 18px 40px rgba(0,0,0,0.20); }
+}  
+
 @media (max-width: 480px) {
-  .avatar { width: 72px; height: 72px; margin-bottom: 10px; }
+  /* slightly larger avatar on small screens to remain prominent */
+  .avatar { width: 96px; height: 96px; margin-bottom: 12px; }
 }
 
 .subtitle {
@@ -115,9 +487,9 @@ nav button.active {
   border-radius: 3px;
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
   transform: translateX(0px);
-  transition: transform var(--transition) ease, width var(--transition) ease;
+  transition: transform var(--transition) var(--easing), width var(--transition) var(--easing);
   pointer-events: none;
-}
+} 
 
 @media (prefers-reduced-motion: reduce) {
   .tab-indicator,
@@ -150,7 +522,8 @@ h2 {
   font-size: 28px;
   position: relative;
   margin-bottom: 20px;
-}
+  transition: color var(--transition) var(--easing);
+} 
 
 h2::after {
   content: "";
@@ -161,23 +534,99 @@ h2::after {
   margin-top: 6px;
 }
 
+/* Section heading accent: only show gold for the active section */
+.tab-content.active h2 {
+  color: var(--accent-gold);
+}
+
+#about p, #about .info-list, .panel #about p, .panel #about .info-list {
+  color: var(--about-body-color, rgba(255,255,255,0.88));
+}
+#about .info-list li strong, .panel #about .info-list li strong {
+  color: rgba(255,255,255,0.96);
+}
+
 /* Cards */
 .card, .project {
-  background: rgba(255,255,255,0.9);
+  background: var(--card-bg);
   border-radius: 14px;
   padding: 22px;
   margin-bottom: 20px;
   box-shadow: 0 14px 30px rgba(0,0,0,0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  color: inherit;
+  transition: transform var(--transition) var(--easing), box-shadow var(--transition) var(--easing), background var(--transition) var(--easing);
+  color: var(--text);
   text-decoration: none;
   display: block; /* allow anchors to behave like cards */
+} 
+
+/* Publication image and caption inside cards */
+.card.publication .publication-figure {
+  margin: 0 0 12px 0;
+  text-align: center;
 }
+.card.publication .publication-figure img {
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  border-radius: 10px;
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 10px 24px rgba(16,8,28,0.38);
+}
+.card.publication .publication-figure figcaption {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--sec-muted, var(--muted));
+  opacity: 0.95;
+}
+
+
 
 .card:hover, .project:hover {
   transform: translateY(-6px);
   box-shadow: 0 22px 45px rgba(0,0,0,0.12);
 }
+
+/* Ensure Research & Publications content uses the section's light text for contrast */
+#research .card, #publications .card,
+.panel #research .card, .panel #publications .card {
+  /* stronger warm translucent card background to improve legibility */
+  background: linear-gradient(180deg, rgba(214,184,109,0.12), rgba(20,18,24,0.06));
+  border-color: rgba(214,184,109,0.10);
+  color: var(--sec-text);
+  box-shadow: 0 10px 30px rgba(16,8,28,0.45);
+}
+
+/* Ensure all text and inline elements inside these cards use the section text color */
+#research .card, #research .card *,
+#publications .card, #publications .card *,
+.panel #research .card, .panel #research .card *,
+.panel #publications .card, .panel #publications .card * {
+  color: var(--sec-text);
+}
+
+#research .card h3, #publications .card h3,
+.panel #research .card h3, .panel #publications .card h3 {
+  color: var(--sec-accent);
+}
+
+#research p, #research li, #publications p, #publications li {
+  color: var(--sec-text);
+}
+
+/* Muted text in these sections should use the section muted variable */
+#research .muted, #publications .muted,
+.panel #research .muted, .panel #publications .muted {
+  color: var(--sec-muted);
+}
+
+/* Links inside Research & Publications should use the section accent and override panel rules */
+.panel #research .card a, .panel #publications .card a,
+#research .card a, #publications .card a {
+  color: var(--sec-accent);
+  text-decoration: underline;
+}
+
 
 /* Focus styles for keyboard users */
 nav button:focus-visible, .project:focus-visible {
@@ -230,10 +679,28 @@ nav button:focus-visible, .project:focus-visible {
 
 /* Links */
 a {
-  color: #3b1d3f;
+  color: var(--link);
   font-weight: 600;
   text-decoration: none;
+  transition: color var(--transition) var(--easing);
+  position: relative;
 }
+/* Animated underline for links */
+a::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -3px;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent-gold), var(--accent));
+  transition: width 280ms var(--easing);
+  border-radius: 2px;
+}
+a:hover::after, a:focus::after { width: 100%; }
+
+/* Contrast debug flag (not enabled by default) */
+body.show-contrast-debug [data-contrast-fail] { outline: 3px dashed rgba(255,77,79,0.95); }
+
 
 /* Contact */
 .email {
@@ -293,4 +760,22 @@ a {
   .container { flex-direction: column; }
   .sidebar { width: 100%; height: auto; }
   .content { padding: 20px; }
+}
+/* ===== Force PLUM color for Projects content inside panel ===== */
+
+/* Target the Projects section via its unique projects-scroll container */
+.panel .panel-inner .projects-scroll,
+.panel .panel-inner .projects-scroll * {
+  color: var(--plum) !important;
+}
+
+/* Ensure project titles stay plum */
+.panel .panel-inner .projects-scroll h3 {
+  color: var(--plum) !important;
+}
+
+/* Ensure project links stay plum */
+.panel .panel-inner .projects-scroll a,
+.panel .panel-inner .projects-scroll .project-link {
+  color: var(--plum) !important;
 }
